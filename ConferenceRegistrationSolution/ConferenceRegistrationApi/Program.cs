@@ -7,6 +7,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// My Domain Services
+
+builder.Services.AddScoped<IProductsService, ProductService>();
+
+// Adapters
+builder.Services.AddHttpClient<MarkupServiceAdapter>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("markupApi"));
+});
+
+builder.Services.AddScoped<MarkupServiceAmountPort>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
