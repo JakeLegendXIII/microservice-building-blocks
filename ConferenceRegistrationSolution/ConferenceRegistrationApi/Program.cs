@@ -1,3 +1,6 @@
+
+using ConferenceRegistrationApi;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -15,7 +18,7 @@ builder.Services.AddScoped<IProductsService, ProductService>();
 builder.Services.AddHttpClient<MarkupServiceAdapter>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("markupApi"));
-});
+}).AddPolicyHandler(HttpPolicies.GetMarkupRetryPolicy());
 
 builder.Services.AddScoped<MarkupServiceAmountPort>();
 

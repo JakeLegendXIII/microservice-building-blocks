@@ -11,6 +11,7 @@ public class MarkupServiceAmountPort
 
     public async Task<decimal> GetMarkupAmountAsync()
     {
+        // Have a plan b
         var response = await _adapter.GetPricingResponseAsync();
 
         return response.amountOfMarkup;
