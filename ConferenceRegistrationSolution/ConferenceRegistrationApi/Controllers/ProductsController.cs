@@ -1,4 +1,6 @@
-﻿namespace ConferenceRegistrationApi.Controllers;
+﻿using MongoDB.Bson;
+
+namespace ConferenceRegistrationApi.Controllers;
 
 public class ProductsController : ControllerBase
 {
@@ -9,18 +11,37 @@ public class ProductsController : ControllerBase
         _productsDomainService = productsDomainService;
     }
 
-    [HttpGet("products/{id:int}")]
-    public async Task<ActionResult> GetProduct(int id)
+    [HttpGet("products/{id}")]
+    public async Task<ActionResult> GetProduct(string id)
     {
-        ProductInformationResponse response = await _productsDomainService.GetProductAsync(id);
-        
-        if (response == null)
+        // TODO: Add a custom route contraint (so the route above would look like [HttpGet("/products/{id:bsonid}")]
+        // I'll write it up and give it to you later.
+        if (ObjectId.TryParse(id, out var _))
         {
-            return NotFound();
+            ProductInformationResponse response = await _productsDomainService.GetProductAsync(id);
+
+            if (response == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return Ok(response);
+            }
         }
         else
         {
-            return Ok(response);
+            return NotFound(); // BadRequest() 400
         }
+    }
+
+
+
+    [HttpGet("products")]
+    public async Task<ActionResult> GetAllProductsAsync()
+    {
+        GetProductsResponse response = await _productsDomainService.GetAllProductsAsync();
+
+        return Ok(response);
     }
 }

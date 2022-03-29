@@ -1,5 +1,6 @@
 
 using ConferenceRegistrationApi;
+using ConferenceRegistrationApi.Adapters.Mongo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,11 +11,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// IOptions Stuff
+builder.Services.Configure<ProductsSettings>(builder.Configuration.GetSection(ProductsSettings.SectionName));
+
 // My Domain Services
 
 builder.Services.AddScoped<IProductsService, ProductService>();
 
 // Adapters
+builder.Services.AddSingleton<MongoProductsAdapter>();
+
 builder.Services.AddHttpClient<MarkupServiceAdapter>(client =>
 {
     client.BaseAddress = new Uri(builder.Configuration.GetValue<string>("markupApi"));
