@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "ServerSide";
+
+message GuidanceRequest {
+string address = 1;
+}
+
+message StepResponse {
+string road = 1;
+string direction = 2;
+}
+
+service TurnByTurn {
+	rpc StartGuidance(GuidanceRequest) returns (stream StepResponse);
+}
