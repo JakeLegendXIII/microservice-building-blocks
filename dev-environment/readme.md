@@ -23,3 +23,5 @@ To run our reservations processor api:
 ```
 dapr run --app-id=reservation-processor --app-port=1340 --dapr-http-port=3501 --dapr-grpc-port=60000 --components-path=.\components -- dotnet run --project ..\ReservationProcessorSolution\ReservationProcessor\ReservationProcessor.csproj
 ```
+
+Link to Jeff's: https://github.com/hypertheory-services/microservice-building-blocks
