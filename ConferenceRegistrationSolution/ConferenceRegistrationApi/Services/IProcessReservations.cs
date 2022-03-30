@@ -2,5 +2,5 @@
 
 public interface IProcessReservations
 {
-    Task<ConferenceConfirmation> ProcessReservationAsync(ConferenceRegistration request);
+    Task ProcessReservationAsync(ConferenceRegistrationRequestMessage request);
 }

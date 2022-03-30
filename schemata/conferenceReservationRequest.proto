@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option csharp_namespace = "ReservationsApi";
+
+message SomeMessage {
+	message Conference {
+		string id = 1;
+		string name = 2;
+	}
+
+	Conference conference = 1;
+}
+
+service ReservationRequests {
+	rpc RequestReservation (SomeMessage) returns (SomeMessage);
+}

@@ -11,28 +11,20 @@ public class ProductsController : ControllerBase
         _productsDomainService = productsDomainService;
     }
 
-    [HttpGet("products/{id}")]
+    [HttpGet("products/{id:bsonid}")]
     public async Task<ActionResult> GetProduct(string id)
     {
-        // TODO: Add a custom route contraint (so the route above would look like [HttpGet("/products/{id:bsonid}")]
         // I'll write it up and give it to you later.
-        if (ObjectId.TryParse(id, out var _))
-        {
-            ProductInformationResponse response = await _productsDomainService.GetProductAsync(id);
+        ProductInformationResponse response = await _productsDomainService.GetProductAsync(id);
 
-            if (response == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return Ok(response);
-            }
+        if (response == null)
+        {
+            return NotFound();
         }
         else
         {
-            return NotFound(); // BadRequest() 400
-        }
+            return Ok(response);
+        }       
     }
 
 

@@ -9,17 +9,16 @@ public class ConferenceRegistrationsController : ControllerBase
     [HttpPost("conference-registrations")]
     public async Task<ActionResult> AddRegistration([FromBody] ConferenceRegistration request)
     {
-        // var myInfo = new ConferenceInfo("989", "Jeff");
-        // var updatedInfo = myInfo with { name = "Joe" };        
-        //var c = new ConferenceRegistration()
-        //{
-        //    Conference = new ConferenceInfo("99", "Bill")
-        //};
+        // TODO: validate the thing
+        // Read It off their Token
+        ConferenceRegistrationRequestMessage message = new ConferenceRegistrationRequestMessage(
+            request.Conference, "999.999.999", Guid.NewGuid().ToString(), RegistrationStatus.Pending);
 
-        // Validate the thing.
-        ConferenceConfirmation response = await _reservationProcessor.ProcessReservationAsync(request);
+        // TODO : store it locally in Mongo or whatever so that the user can check the status
+        // Tell, don't ask.
+        await _reservationProcessor.ProcessReservationAsync(message);
 
-        return StatusCode(201, response);
+        return StatusCode(201, request);
     }
 }
 
